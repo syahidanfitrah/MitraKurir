@@ -5,6 +5,14 @@
  */
 package main;
 
+import db.MySqlConnection;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author raihan
@@ -17,10 +25,50 @@ public class signup extends javax.swing.JFrame {
     
     public signup() {
         initComponents();
-        fullname.setBackground(new java.awt.Color(0,0,0,1));
-        email.setBackground(new java.awt.Color(0,0,0,1));
-        nomortelp.setBackground(new java.awt.Color(0,0,0,1));
-        password.setBackground(new java.awt.Color(0,0,0,1));
+        txtfullname.setBackground(new java.awt.Color(0,0,0,1));
+        txtemail.setBackground(new java.awt.Color(0,0,0,1));
+        txtnomortelp.setBackground(new java.awt.Color(0,0,0,1));
+        txtpassword.setBackground(new java.awt.Color(0,0,0,1));
+        
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 13)); 
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Login");
+        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                login loginFrame = new login();
+                loginFrame.setVisible(true);
+                signup.this.setVisible(false); // Menyembunyikan frame signup, bukan dispose()
+            }
+
+            private void dispose() {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+
+    }
+    
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {                                      
+        login loginFrame = new login();
+        loginFrame.setVisible(true);
+        this.setVisible(false); // Menyembunyikan frame signup, bukan dispose()
+    }
+
+    public static boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(gmail|yahoo|unpas\\.ac\\.id)$";
+        return email.matches(emailRegex);
+    }
+    
+    public static boolean isValidPhoneNumber(String phoneNumber) {
+        // Misalnya, kita ingin nomor telepon memiliki tepat 10 digit
+        String phoneRegex = "^\\d{10}$";
+        return phoneNumber.matches(phoneRegex);
+    }
+
+    public static boolean isValidPassword(String password) {
+        // Misalnya, kita ingin password memiliki panjang minimal 8 karakter dan maksimal 20 karakter
+        String passwordRegex = "^.{8,20}$";
+        return password.matches(passwordRegex);
     }
 
     /**
@@ -38,10 +86,10 @@ public class signup extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        email = new javax.swing.JTextField();
+        txtemail = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        password = new javax.swing.JPasswordField();
+        txtpassword = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
         disable = new javax.swing.JLabel();
         show = new javax.swing.JLabel();
@@ -51,10 +99,10 @@ public class signup extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        nomortelp = new javax.swing.JTextField();
+        txtnomortelp = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        fullname = new javax.swing.JTextField();
+        txtfullname = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -101,15 +149,15 @@ public class signup extends javax.swing.JFrame {
         jLabel4.setText("Hello! Let's get started");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 94, 420, -1));
 
-        email.setFont(email.getFont().deriveFont(email.getFont().getSize()+2f));
-        email.setForeground(new java.awt.Color(255, 255, 255));
-        email.setBorder(null);
-        email.addActionListener(new java.awt.event.ActionListener() {
+        txtemail.setFont(txtemail.getFont().deriveFont(txtemail.getFont().getSize()+2f));
+        txtemail.setForeground(new java.awt.Color(255, 255, 255));
+        txtemail.setBorder(null);
+        txtemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailActionPerformed(evt);
+                txtemailActionPerformed(evt);
             }
         });
-        jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 240, 30));
+        jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 240, 30));
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_user_20px_1.png"))); // NOI18N
@@ -120,16 +168,16 @@ public class signup extends javax.swing.JFrame {
         jLabel8.setText("Password");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 300, 341, -1));
 
-        password.setFont(password.getFont().deriveFont(password.getFont().getSize()+2f));
-        password.setForeground(new java.awt.Color(255, 255, 255));
-        password.setBorder(null);
-        password.setCaretColor(new java.awt.Color(255, 255, 255));
-        password.addActionListener(new java.awt.event.ActionListener() {
+        txtpassword.setFont(txtpassword.getFont().deriveFont(txtpassword.getFont().getSize()+2f));
+        txtpassword.setForeground(new java.awt.Color(255, 255, 255));
+        txtpassword.setBorder(null);
+        txtpassword.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtpassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordActionPerformed(evt);
+                txtpasswordActionPerformed(evt);
             }
         });
-        jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 240, 30));
+        jPanel2.add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 240, 30));
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("_________________________________________");
@@ -192,10 +240,10 @@ public class signup extends javax.swing.JFrame {
         jLabel12.setText("Nomor Telepon");
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 240, 341, -1));
 
-        nomortelp.setFont(nomortelp.getFont().deriveFont(nomortelp.getFont().getSize()+2f));
-        nomortelp.setForeground(new java.awt.Color(255, 255, 255));
-        nomortelp.setBorder(null);
-        jPanel2.add(nomortelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 240, 30));
+        txtnomortelp.setFont(txtnomortelp.getFont().deriveFont(txtnomortelp.getFont().getSize()+2f));
+        txtnomortelp.setForeground(new java.awt.Color(255, 255, 255));
+        txtnomortelp.setBorder(null);
+        jPanel2.add(txtnomortelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 240, 30));
 
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("_________________________________________");
@@ -206,15 +254,15 @@ public class signup extends javax.swing.JFrame {
         jLabel16.setText("Full Name");
         jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 120, 341, -1));
 
-        fullname.setFont(fullname.getFont().deriveFont(fullname.getFont().getSize()+2f));
-        fullname.setForeground(new java.awt.Color(255, 255, 255));
-        fullname.setBorder(null);
-        fullname.addActionListener(new java.awt.event.ActionListener() {
+        txtfullname.setFont(txtfullname.getFont().deriveFont(txtfullname.getFont().getSize()+2f));
+        txtfullname.setForeground(new java.awt.Color(255, 255, 255));
+        txtfullname.setBorder(null);
+        txtfullname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fullnameActionPerformed(evt);
+                txtfullnameActionPerformed(evt);
             }
         });
-        jPanel2.add(fullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 240, 30));
+        jPanel2.add(txtfullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 240, 30));
 
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("_________________________________________");
@@ -231,7 +279,7 @@ public class signup extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void disableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableMouseClicked
-        password.setEchoChar((char)0);
+        txtpassword.setEchoChar((char)0);
         disable.setVisible(false);
         disable.setEnabled(false);
         show.setEnabled(true);
@@ -239,7 +287,7 @@ public class signup extends javax.swing.JFrame {
     }//GEN-LAST:event_disableMouseClicked
 
     private void showMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMouseClicked
-        password.setEchoChar((char)8226);
+        txtpassword.setEchoChar((char)8226);
         disable.setVisible(true);
         disable.setEnabled(true);
         show.setEnabled(false);
@@ -261,19 +309,76 @@ public class signup extends javax.swing.JFrame {
 
     private void signupbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupbtnActionPerformed
         // TODO add your handling code here:
+        String fullname = txtfullname.getText();
+        String email = txtemail.getText();
+        String nomortelp = txtnomortelp.getText();
+        String password = new String(txtpassword.getPassword());
+        
+        // Lakukan validasi untuk memeriksa field yang kosong
+        if (fullname.isEmpty() || email.isEmpty() || nomortelp.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (!isValidEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Invalid email format!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!isValidPhoneNumber(nomortelp)) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid phone number!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!isValidPassword(password)) {
+            JOptionPane.showMessageDialog(this, "Please enter a password between 8 and 20 characters!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Lakukan kueri ke database untuk memasukkan data baru
+        Connection conn = MySqlConnection.getInstance().getConnection();
+
+        if (conn != null) {
+            try {
+                String query = "INSERT INTO user (fullname, email, nomortelp, password) VALUES (?, ?, ?, ?)";
+                PreparedStatement pst = conn.prepareStatement(query);
+                pst.setString(1, fullname);
+                pst.setString(2, email);
+                pst.setString(3, nomortelp);
+                pst.setString(4, password);
+                int rowsInserted = pst.executeUpdate();
+                if (rowsInserted > 0) {
+                    JOptionPane.showMessageDialog(this, "Sign up successful!");
+                } else {
+                    // Jika gagal mendapatkan koneksi
+                    JOptionPane.showMessageDialog(this, "Sign up failed! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                // Tangani kesalahan dengan menampilkan pesan atau melakukan tindakan tertentu
+                JOptionPane.showMessageDialog(this, "Error during sign-up: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace(); // Cetak jejak kesalahan untuk debugging
+            }
+        } else {
+            // Jika gagal mendapatkan koneksi
+            JOptionPane.showMessageDialog(this, "Database connection failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        // Navigasi ke halaman login
+        login loginFrame = new login();
+        loginFrame.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_signupbtnActionPerformed
 
-    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
+    private void txtpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordActionPerformed
+    }//GEN-LAST:event_txtpasswordActionPerformed
 
-    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_emailActionPerformed
+    }//GEN-LAST:event_txtemailActionPerformed
 
-    private void fullnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullnameActionPerformed
+    private void txtfullnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfullnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fullnameActionPerformed
+    }//GEN-LAST:event_txtfullnameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,8 +424,6 @@ public class signup extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel disable;
-    private javax.swing.JTextField email;
-    private javax.swing.JTextField fullname;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -338,9 +441,11 @@ public class signup extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField nomortelp;
-    private javax.swing.JPasswordField password;
     private javax.swing.JLabel show;
     private javax.swing.JButton signupbtn;
+    private javax.swing.JTextField txtemail;
+    private javax.swing.JTextField txtfullname;
+    private javax.swing.JTextField txtnomortelp;
+    private javax.swing.JPasswordField txtpassword;
     // End of variables declaration//GEN-END:variables
 }
