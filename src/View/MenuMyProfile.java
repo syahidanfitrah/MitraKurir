@@ -4,6 +4,12 @@
  */
 package View;
 
+import db.MySqlConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author ahmad
@@ -13,8 +19,46 @@ public class MenuMyProfile extends javax.swing.JPanel {
     /**
      * Creates new form MenuMyProfile
      */
+    
+    private MySqlConnection mySqlConnection; // Deklarasikan objek MySqlConnection
+
     public MenuMyProfile() {
         initComponents();
+        mySqlConnection = MySqlConnection.getInstance(); // Inisialisasi objek MySqlConnection
+        loadDataFromDatabase(); // Panggil metode untuk memuat data dari database ke label
+    }
+
+    private void loadDataFromDatabase() {
+        // Mendapatkan koneksi dari MySqlConnection
+        Connection conn = mySqlConnection.getConnection();
+        if (conn != null) {
+            try {
+                // Gunakan koneksi untuk mengambil data dari database
+                // Misalnya, Anda dapat menggunakan PreparedStatement atau Statement
+                // Di sini, saya contohkan penggunaan Statement
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT fullname, email, nomortelp, password FROM your_table_name WHERE your_condition");
+
+                // Mengisi label-label dengan data dari database
+                if (rs.next()) {
+                    jLabel3.setText(rs.getString("fullname"));
+                    jLabel5.setText(rs.getString("email"));
+                    jLabel9.setText(rs.getString("nomortelp"));
+                    jLabel7.setText(rs.getString("password"));
+                }
+
+                // Tutup ResultSet, Statement, dan koneksi
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Tindakan yang diambil jika koneksi gagal
+            System.out.println("Koneksi ke database gagal.");
+        }
+        // ...
     }
 
     /**
@@ -115,8 +159,6 @@ public class MenuMyProfile extends javax.swing.JPanel {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel6.setText("Password :");
 
@@ -143,6 +185,7 @@ public class MenuMyProfile extends javax.swing.JPanel {
                 .addGap(12, 12, 12))
         );
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(595, 67));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -186,11 +229,11 @@ public class MenuMyProfile extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 198, Short.MAX_VALUE))
+                .addGap(0, 205, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

@@ -6,12 +6,22 @@
 package main;
 
 import db.MySqlConnection;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
+import java.util.Scanner;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.DocumentFilter;
 
 /**
  *
@@ -29,12 +39,14 @@ public class signup extends javax.swing.JFrame {
         txtemail.setBackground(new java.awt.Color(0,0,0,1));
         txtnomortelp.setBackground(new java.awt.Color(0,0,0,1));
         txtpassword.setBackground(new java.awt.Color(0,0,0,1));
+        txtconfirmpass.setBackground(new java.awt.Color(0,0,0,1));
         
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 13)); 
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Login");
         jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 login loginFrame = new login();
                 loginFrame.setVisible(true);
@@ -45,9 +57,8 @@ public class signup extends javax.swing.JFrame {
                 throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
         });
-
     }
-    
+        
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {                                      
         login loginFrame = new login();
         loginFrame.setVisible(true);
@@ -55,7 +66,7 @@ public class signup extends javax.swing.JFrame {
     }
 
     public static boolean isValidEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(gmail|yahoo|unpas\\.ac\\.id)$";
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(gmail|yahoo)\\.com$";
         return email.matches(emailRegex);
     }
     
@@ -66,11 +77,11 @@ public class signup extends javax.swing.JFrame {
     }
 
     public static boolean isValidPassword(String password) {
-        // Misalnya, kita ingin password memiliki panjang minimal 8 karakter dan maksimal 20 karakter
-        String passwordRegex = "^.{8,20}$";
+        // Memodifikasi ekspresi regulernya untuk memeriksa minimal 5 huruf
+        String passwordRegex = "^(?=.*[0-9])(?=.*[a-zA-Z]{5,}).{8,20}$";
         return password.matches(passwordRegex);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,6 +115,9 @@ public class signup extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         txtfullname = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        txtconfirmpass = new javax.swing.JPasswordField();
+        jLabel19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -120,7 +134,7 @@ public class signup extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/logo.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 370, 340));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 500));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 550));
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 51));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -212,19 +226,19 @@ public class signup extends javax.swing.JFrame {
                 signupbtnActionPerformed(evt);
             }
         });
-        jPanel2.add(signupbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 400, 341, 40));
+        jPanel2.add(signupbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 440, 341, 40));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Login");
         jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(258, 450, 40, -1));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 490, 40, -1));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(199, 226, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel14.setText("Already have an account?");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 213, -1));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 490, 213, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(199, 226, 255));
@@ -243,6 +257,11 @@ public class signup extends javax.swing.JFrame {
         txtnomortelp.setFont(txtnomortelp.getFont().deriveFont(txtnomortelp.getFont().getSize()+2f));
         txtnomortelp.setForeground(new java.awt.Color(255, 255, 255));
         txtnomortelp.setBorder(null);
+        txtnomortelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnomortelpActionPerformed(evt);
+            }
+        });
         jPanel2.add(txtnomortelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 240, 30));
 
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -268,9 +287,29 @@ public class signup extends javax.swing.JFrame {
         jLabel17.setText("_________________________________________");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 148, 290, 39));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 420, 500));
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(199, 226, 255));
+        jLabel18.setText("Confirm Password");
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 360, 341, -1));
 
-        setSize(new java.awt.Dimension(916, 500));
+        txtconfirmpass.setFont(txtconfirmpass.getFont().deriveFont(txtconfirmpass.getFont().getSize()+2f));
+        txtconfirmpass.setForeground(new java.awt.Color(255, 255, 255));
+        txtconfirmpass.setBorder(null);
+        txtconfirmpass.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtconfirmpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtconfirmpassActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtconfirmpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 240, 30));
+
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("_________________________________________");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 387, 290, 40));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 420, 550));
+
+        setSize(new java.awt.Dimension(916, 550));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -313,8 +352,8 @@ public class signup extends javax.swing.JFrame {
         String email = txtemail.getText();
         String nomortelp = txtnomortelp.getText();
         String password = new String(txtpassword.getPassword());
+        String confirmPassword = new String(txtconfirmpass.getPassword());
         
-        // Lakukan validasi untuk memeriksa field yang kosong
         if (fullname.isEmpty() || email.isEmpty() || nomortelp.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -325,16 +364,31 @@ public class signup extends javax.swing.JFrame {
             return;
         }
 
-        if (!isValidPhoneNumber(nomortelp)) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid phone number!", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!password.matches(".*\\d.*")) {
+            JOptionPane.showMessageDialog(this, "Password must contain at least one digit!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
+        if (!password.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(this, "Password and Confirm Password do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         if (!isValidPassword(password)) {
             JOptionPane.showMessageDialog(this, "Please enter a password between 8 and 20 characters!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
+        if (!isValidPassword(password)) {
+            JOptionPane.showMessageDialog(this, "Please enter a password between 8 and 20 characters!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (!isValidPhoneNumber(nomortelp)) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid phone number!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         // Lakukan kueri ke database untuk memasukkan data baru
         Connection conn = MySqlConnection.getInstance().getConnection();
 
@@ -379,6 +433,14 @@ public class signup extends javax.swing.JFrame {
     private void txtfullnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfullnameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtfullnameActionPerformed
+
+    private void txtconfirmpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtconfirmpassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtconfirmpassActionPerformed
+
+    private void txtnomortelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnomortelpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnomortelpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -433,6 +495,8 @@ public class signup extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -443,6 +507,7 @@ public class signup extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel show;
     private javax.swing.JButton signupbtn;
+    private javax.swing.JPasswordField txtconfirmpass;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtfullname;
     private javax.swing.JTextField txtnomortelp;
