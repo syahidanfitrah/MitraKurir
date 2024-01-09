@@ -171,7 +171,7 @@ public class signup extends javax.swing.JFrame {
                 txtemailActionPerformed(evt);
             }
         });
-        jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 240, 30));
+        jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 290, 30));
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_user_20px_1.png"))); // NOI18N
@@ -191,7 +191,7 @@ public class signup extends javax.swing.JFrame {
                 txtpasswordActionPerformed(evt);
             }
         });
-        jPanel2.add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 240, 30));
+        jPanel2.add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 290, 30));
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("_________________________________________");
@@ -226,7 +226,7 @@ public class signup extends javax.swing.JFrame {
                 signupbtnActionPerformed(evt);
             }
         });
-        jPanel2.add(signupbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 440, 341, 40));
+        jPanel2.add(signupbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 440, 330, 40));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
@@ -262,7 +262,7 @@ public class signup extends javax.swing.JFrame {
                 txtnomortelpActionPerformed(evt);
             }
         });
-        jPanel2.add(txtnomortelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 240, 30));
+        jPanel2.add(txtnomortelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 290, 30));
 
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("_________________________________________");
@@ -281,7 +281,7 @@ public class signup extends javax.swing.JFrame {
                 txtfullnameActionPerformed(evt);
             }
         });
-        jPanel2.add(txtfullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 240, 30));
+        jPanel2.add(txtfullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 290, 30));
 
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("_________________________________________");
@@ -301,7 +301,7 @@ public class signup extends javax.swing.JFrame {
                 txtconfirmpassActionPerformed(evt);
             }
         });
-        jPanel2.add(txtconfirmpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 240, 30));
+        jPanel2.add(txtconfirmpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 290, 30));
 
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("_________________________________________");

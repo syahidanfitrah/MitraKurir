@@ -202,7 +202,7 @@ public class login extends javax.swing.JFrame {
                 txtemailActionPerformed(evt);
             }
         });
-        jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 140, 240, 30));
+        jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 140, 280, 30));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("_________________________________________");
@@ -226,7 +226,7 @@ public class login extends javax.swing.JFrame {
                 txtpasswordActionPerformed(evt);
             }
         });
-        jPanel2.add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 240, 30));
+        jPanel2.add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 280, 30));
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("_________________________________________");

@@ -86,7 +86,7 @@ public class forgotpass extends javax.swing.JFrame {
                 txtemailActionPerformed(evt);
             }
         });
-        jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 330, 30));
+        jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 330, 30));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("_________________________________________");
