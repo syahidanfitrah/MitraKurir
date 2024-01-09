@@ -5,6 +5,7 @@
  */
 package main;
 
+import db.MySqlConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -83,31 +84,31 @@ public class login extends javax.swing.JFrame {
     }
     
     public void login() {
-    String email = txtemail.getText();
-    String password = String.valueOf(txtpassword.getPassword());
+        String email = txtemail.getText();
+        String password = String.valueOf(txtpassword.getPassword());
 
-    // Tes koneksi ke database
-    try {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pp2_tubes", "root", "");
+        // Proses login ke database
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pp2_tubes", "root", "");
 
-        String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, email);
-        pstmt.setString(2, password);
+            String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
 
-        ResultSet rs = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
 
-        if (rs.next()) {
-            System.out.println("Login berhasil!");
-            // Buka jendela atau frame berikutnya
-        } else {
-            System.out.println("Login gagal!");
-            // Tampilkan pesan error atau popup
-        }
-    } catch (ClassNotFoundException | SQLException ex) {
-        System.out.println("Koneksi ke database gagal!");
-        ex.printStackTrace();
+            if (rs.next()) {
+                System.out.println("Login berhasil!");
+                // Buka jendela atau frame berikutnya
+            } else {
+                System.out.println("Login gagal!");
+                // Tampilkan pesan error atau popup
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println("Koneksi ke database gagal!");
+            ex.printStackTrace();
         }
     }
 
@@ -313,55 +314,54 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtpasswordActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:                                               
+        // TODO add your handling code here:
+        login();
+
         String Email, Password, query, email = null, passDb = null;
-        String SUrl, SUser, SPass;
-        SUrl = "jdbc:MySQL://localhost:3306/pp2_tubes";
-        SUser = "root";
-        SPass = "";
         int notFound = 0;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(SUrl, SUser, SPass);
-            Statement st = con.createStatement();
             if("".equals(txtemail.getText())){
                 JOptionPane.showMessageDialog(new JFrame(), "Email Address is required", "Error",
                         JOptionPane.ERROR_MESSAGE);
-            }else if("".equals(txtpassword.getText())){
+            } else if("".equals(txtpassword.getText())){
                 JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Error",
                         JOptionPane.ERROR_MESSAGE);
-            }else {
-            Email    = txtemail.getText();
-            Password = txtpassword.getText();
-            
-            query = "SELECT * FROM user WHERE email= '"+Email+"'";
-       
-            ResultSet rs = st.executeQuery(query);
-            while(rs.next()){
-                passDb = rs.getString("password");
-                email = rs.getString("email");
-                notFound = 1;
+            } else {
+                Email    = txtemail.getText();
+                Password = txtpassword.getText();
+
+                query = "SELECT * FROM user WHERE email= ?";
+
+                try (Connection con = MySqlConnection.getInstance().getConnection();
+                     PreparedStatement pstmt = con.prepareStatement(query)) {
+
+                    pstmt.setString(1, Email);
+                    ResultSet rs = pstmt.executeQuery();
+
+                    while(rs.next()){
+                        passDb = rs.getString("password");
+                        email = rs.getString("email");
+                        notFound = 1;
+                    }
+                }
+
+                if(notFound == 1 && Password.equals(passDb)){
+                    dashboard dashboard = new dashboard();
+                    dashboard.setUser(email);
+                    dashboard.setVisible(true);
+                    dashboard.pack();
+                    dashboard.setLocationRelativeTo(null); 
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(new JFrame(), "Invalid email or password", "Login Failed",
+                            JOptionPane.ERROR_MESSAGE);
+                    txtpassword.setText("");
+                }
             }
-            if(notFound == 1 && Password.equals(passDb)){
-                dashboard dashboard = new dashboard();
-                dashboard.setUser(email);
-                dashboard.setVisible(true);
-                dashboard.pack();
-                dashboard.setLocationRelativeTo(null); 
-                this.dispose();
-            }else{
-               JOptionPane.showMessageDialog(new JFrame(), "Incorrect email or password", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-               return;
-            }
-            txtpassword.setText("");
-            
-            }
-        } catch(Exception e){
+        } catch(SQLException e){
             System.out.println("Error: " + e.getMessage()); 
             e.printStackTrace();
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed

@@ -4,6 +4,12 @@
  */
 package View;
 
+import db.MySqlConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author ahmad
@@ -13,8 +19,46 @@ public class MenuMyProfile extends javax.swing.JPanel {
     /**
      * Creates new form MenuMyProfile
      */
+    
+    private MySqlConnection mySqlConnection; // Deklarasikan objek MySqlConnection
+
     public MenuMyProfile() {
         initComponents();
+        mySqlConnection = MySqlConnection.getInstance(); // Inisialisasi objek MySqlConnection
+        loadDataFromDatabase(); // Panggil metode untuk memuat data dari database ke label
+    }
+
+    private void loadDataFromDatabase() {
+        // Mendapatkan koneksi dari MySqlConnection
+        Connection conn = mySqlConnection.getConnection();
+        if (conn != null) {
+            try {
+                // Gunakan koneksi untuk mengambil data dari database
+                // Misalnya, Anda dapat menggunakan PreparedStatement atau Statement
+                // Di sini, saya contohkan penggunaan Statement
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT fullname, email, nomortelp, password FROM your_table_name WHERE your_condition");
+
+                // Mengisi label-label dengan data dari database
+                if (rs.next()) {
+                    jLabel3.setText(rs.getString("fullname"));
+                    jLabel5.setText(rs.getString("email"));
+                    jLabel9.setText(rs.getString("nomortelp"));
+                    jLabel7.setText(rs.getString("password"));
+                }
+
+                // Tutup ResultSet, Statement, dan koneksi
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Tindakan yang diambil jika koneksi gagal
+            System.out.println("Koneksi ke database gagal.");
+        }
+        // ...
     }
 
     /**
@@ -38,6 +82,9 @@ public class MenuMyProfile extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 255, 204));
 
@@ -112,8 +159,6 @@ public class MenuMyProfile extends javax.swing.JPanel {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel6.setText("Password :");
 
@@ -140,6 +185,35 @@ public class MenuMyProfile extends javax.swing.JPanel {
                 .addGap(12, 12, 12))
         );
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setPreferredSize(new java.awt.Dimension(595, 67));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jLabel8.setText("Nomor Telepon :");
+
+        jLabel9.setText("084328473274239");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8))
+                .addContainerGap(478, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -147,6 +221,7 @@ public class MenuMyProfile extends javax.swing.JPanel {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,8 +230,10 @@ public class MenuMyProfile extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 272, Short.MAX_VALUE))
+                .addGap(0, 205, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -204,9 +281,12 @@ public class MenuMyProfile extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     // End of variables declaration//GEN-END:variables
 }

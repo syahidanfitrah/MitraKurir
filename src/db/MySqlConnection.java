@@ -38,6 +38,6 @@ public class MySqlConnection {
         } catch (Exception e) {
             e.printStackTrace(); // Menangkap dan mencetak error jika ada
         }
-        return connection; // Mengembalikan koneksi yang berhasil atau null jika gagal
+        return connection; // Mengembalikan  koneksi yang berhasil atau null jika gagal
     }
 }
