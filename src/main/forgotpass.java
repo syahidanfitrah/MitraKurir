@@ -34,6 +34,12 @@ public class forgotpass extends javax.swing.JFrame {
         txtemail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtemail1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtemail2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -67,16 +73,16 @@ public class forgotpass extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 40, 29));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 32)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Reset password");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 420, 41));
+        jLabel3.setText("Reset Password");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 420, 41));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(199, 226, 255));
-        jLabel5.setText("Email");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 341, -1));
+        jLabel5.setText("Password Lama");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 341, -1));
 
         txtemail.setFont(txtemail.getFont().deriveFont(txtemail.getFont().getSize()+2f));
         txtemail.setForeground(new java.awt.Color(255, 255, 255));
@@ -86,11 +92,11 @@ public class forgotpass extends javax.swing.JFrame {
                 txtemailActionPerformed(evt);
             }
         });
-        jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 330, 30));
+        jPanel2.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 330, 30));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("_________________________________________");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 290, 39));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 290, 39));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(102, 204, 0));
@@ -101,7 +107,44 @@ public class forgotpass extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 306, 341, 40));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 341, 40));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(199, 226, 255));
+        jLabel7.setText("Konfirmasi Password ");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 341, -1));
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("_________________________________________");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 159, 290, 40));
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("_________________________________________");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 290, 39));
+
+        txtemail1.setFont(txtemail1.getFont().deriveFont(txtemail1.getFont().getSize()+2f));
+        txtemail1.setBorder(null);
+        txtemail1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtemail1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtemail1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 330, 30));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(199, 226, 255));
+        jLabel10.setText("Password Baru");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 341, -1));
+
+        txtemail2.setFont(txtemail2.getFont().deriveFont(txtemail2.getFont().getSize()+2f));
+        txtemail2.setForeground(new java.awt.Color(255, 255, 255));
+        txtemail2.setBorder(null);
+        txtemail2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtemail2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtemail2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 330, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 420, 440));
 
@@ -134,6 +177,14 @@ public class forgotpass extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtemailActionPerformed
 
+    private void txtemail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemail1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtemail1ActionPerformed
+
+    private void txtemail2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemail2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtemail2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -158,12 +209,18 @@ public class forgotpass extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtemail;
+    private javax.swing.JTextField txtemail1;
+    private javax.swing.JTextField txtemail2;
     // End of variables declaration//GEN-END:variables
 }
