@@ -29,7 +29,10 @@ public class login extends javax.swing.JFrame {
      * Creates new form login
      */
     
+    private ForgotListener forgotListener;
+    
     public class Login {
+    
     private boolean loginSuccessful;
         private boolean loginSuccesfulCondition;
 
@@ -68,7 +71,8 @@ public class login extends javax.swing.JFrame {
         initComponents();
         txtemail.setBackground(new java.awt.Color(0,0,0,1));
         txtpassword.setBackground(new java.awt.Color(0,0,0,1));
-        jLabel13.addMouseListener(new SignUpListener(this));
+        jLabel15.addMouseListener(new SignUpListener(this));
+        jLabel13.addMouseListener(new ForgotListener(this));
 
         
         // Tes koneksi ke database
@@ -139,6 +143,7 @@ public class login extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -260,15 +265,21 @@ public class login extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Sign Up");
+        jLabel13.setText("Forgot Password ?");
         jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 357, 50, -1));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 120, -1));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(199, 226, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel14.setText("Don't have an account?");
         jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 357, 213, -1));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Sign Up");
+        jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 357, 50, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 420, 440));
 
@@ -412,6 +423,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -442,6 +454,28 @@ public class login extends javax.swing.JFrame {
             // Buka JFrame Sign Up
             signup frameSignUp = new signup();
             frameSignUp.setVisible(true);
+        }
+
+        public void mousePressed(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent e) {}
+        public void mouseExited(MouseEvent e) {}
+    }
+
+class ForgotListener implements MouseListener {
+        private JFrame loginFrame;
+
+        public ForgotListener(JFrame loginFrame) {
+            this.loginFrame = loginFrame;
+        }
+
+        public void mouseClicked(MouseEvent e) {
+            // Tutup JFrame Login
+            loginFrame.dispose();
+
+            // Buka JFrame Sign Up
+            forgotpass frameForgot = new forgotpass();
+            frameForgot.setVisible(true);
         }
 
         public void mousePressed(MouseEvent e) {}
