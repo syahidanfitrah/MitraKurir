@@ -413,7 +413,7 @@ public class dashboard extends javax.swing.JFrame {
         btn_profile2.setForeground(new Color(0,51,51));
         
         pn_utama.removeAll();
-        pn_utama.add(new MenuMyProfile());
+        pn_utama.add(new MenuMyProfile(2));
         pn_utama.repaint();
         pn_utama.revalidate();
     }//GEN-LAST:event_btn_profile2MouseClicked
@@ -433,7 +433,7 @@ public class dashboard extends javax.swing.JFrame {
         btn_profile2.setForeground(new Color(0,51,51));
         
         pn_utama.removeAll();
-        pn_utama.add(new MenuMyProfile());
+        pn_utama.add(new MenuMyProfile(2));
         pn_utama.repaint();
         pn_utama.revalidate();
     }//GEN-LAST:event_btn_profile1MouseClicked
