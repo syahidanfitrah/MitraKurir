@@ -10,6 +10,7 @@ package View;
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -68,8 +69,18 @@ public class MenuKategoriSampah extends javax.swing.JPanel {
         });
 
         btnhapus.setText("Hapus");
+        btnhapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnhapusActionPerformed(evt);
+            }
+        });
 
         btnedit.setText("Edit");
+        btnedit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneditActionPerformed(evt);
+            }
+        });
 
         tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,6 +93,11 @@ public class MenuKategoriSampah extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabel);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -196,6 +212,50 @@ public class MenuKategoriSampah extends javax.swing.JPanel {
     private void noActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_noActionPerformed
+
+    private void btneditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneditActionPerformed
+    try {                                        
+        Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/pp2_tubes","root", "");
+        String sql = "UPDATE kategorisampah SET nama=?, ukuran=?, kategori=? WHERE id=?";
+        try (PreparedStatement preparedStatement = cn.prepareStatement(sql)) {
+            preparedStatement.setString(1, sampah.getText());
+            preparedStatement.setString(2, ukuran.getText());
+            preparedStatement.setString(3, kategori.getText());
+            preparedStatement.setString(4, no.getText());
+            preparedStatement.executeUpdate();
+            tampilkan();
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuKategoriSampah.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    } catch (SQLException ex) {
+    Logger.getLogger(MenuKategoriSampah.class.getName()).log(Level.SEVERE, null, ex);
+}
+
+    }//GEN-LAST:event_btneditActionPerformed
+
+    private void tabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMouseClicked
+        // TODO add your handling code here:
+        int i = tabel.getSelectedRow();
+        
+        if(i>-i) {
+            no.setText(model.getValueAt(i, 0).toString());
+            sampah.setText(model.getValueAt(i, 1).toString());
+            ukuran.setText(model.getValueAt(i, 2).toString());
+            kategori.setText(model.getValueAt(i, 3).toString());
+        }
+    }//GEN-LAST:event_tabelMouseClicked
+
+    private void btnhapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapusActionPerformed
+        try {
+            // TODO add your handling code here:
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/pp2_tubes","root", "");
+            cn.createStatement().executeUpdate("delete from kategorisampah where id='"+no.getText()+"' ");
+            tampilkan();
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuKategoriSampah.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnhapusActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
