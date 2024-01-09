@@ -452,6 +452,8 @@ public class dashboard extends javax.swing.JFrame {
 
     private void btn_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_logoutMouseClicked
         // TODO add your handling code here:
+        
+        
         this.dispose();
         btn_logout.setVisible(true);
     }//GEN-LAST:event_btn_logoutMouseClicked
